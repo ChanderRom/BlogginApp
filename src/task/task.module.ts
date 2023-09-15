@@ -9,9 +9,14 @@ import { GetTasksHandler } from './queries/handlers/get-tasks.handler';
 import { GetTasksByIdHandler } from './queries/handlers/get-task-by-id.handler';
 import { DeleteTaskHandler } from './commands/handlers/delete-task.handler';
 import { CreateTaskHandler } from './commands/handlers/create-task.handler';
+import { DatabaseModule } from 'src/config/database.module';
+import { taskProviders } from './task.providers';
 
 @Module({
-  imports: [CqrsModule],
+  imports: [
+    CqrsModule,
+    DatabaseModule,
+  ],
   providers: [
     UpdateTaskHandler,
     TaskService,
@@ -19,6 +24,8 @@ import { CreateTaskHandler } from './commands/handlers/create-task.handler';
     GetTasksByIdHandler,
     DeleteTaskHandler,
     CreateTaskHandler,
+
+    ...taskProviders,
   ],
   controllers: [TaskController]
 })

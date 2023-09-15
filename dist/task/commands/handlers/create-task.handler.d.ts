@@ -4,5 +4,5 @@ import { TaskService } from '../../task.service';
 export declare class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
     private readonly taskService;
     constructor(taskService: TaskService);
-    execute(command: CreateTaskCommand): Promise<Task>;
+    execute(command: CreateTaskCommand): Promise<import("../../entity/task.entity").Task>;
 }

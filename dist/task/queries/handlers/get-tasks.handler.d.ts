@@ -4,5 +4,5 @@ import { TaskService } from '../../task.service';
 export declare class GetTasksHandler implements IQueryHandler<GetTasksQuery> {
     private readonly taskService;
     constructor(taskService: TaskService);
-    execute(query: GetTasksQuery): Promise<Task[]>;
+    execute(query: GetTasksQuery): Promise<import("../../entity/task.entity").Task[]>;
 }
