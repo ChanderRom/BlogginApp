@@ -7,7 +7,7 @@ import { GetTasksQuery } from "../get-tasks.query";
 export class GetTasksHandler implements IQueryHandler<GetTasksQuery> {
     constructor(
         @Inject('TASK_REPOSITORY')
-        private taskRepository: Repository<Task>,
+        private readonly taskRepository: Repository<Task>,
     ) {}
 
     async execute(): Promise<Task[]> {

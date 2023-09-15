@@ -1,8 +1,8 @@
 import { IQueryHandler } from '@nestjs/cqrs';
 import { GetTasksQuery } from '../get-tasks.query';
-import { TaskService } from '../../task.service';
+import { Repository } from 'typeorm';
 export declare class GetTaskByIdHandler implements IQueryHandler<GetTasksQuery> {
-    private readonly taskService;
-    constructor(taskService: TaskService);
+    private readonly taskRepository;
+    constructor(taskRepository: Repository<Task>);
     execute(query: GetTasksQuery): Promise<void>;
 }

@@ -18,22 +18,22 @@ const cqrs_1 = require("@nestjs/cqrs");
 const create_task_dto_1 = require("./dto/create-task.dto");
 const create_task_command_1 = require("./commands/create-task.command");
 const get_tasks_query_1 = require("./queries/get-tasks.query");
+const task_service_1 = require("./task.service");
 let TaskController = class TaskController {
-    constructor(commandBus, queryBus) {
+    constructor(commandBus, queryBus, taskService) {
         this.commandBus = commandBus;
         this.queryBus = queryBus;
+        this.taskService = taskService;
     }
     async getTasks() {
-        try {
-            const query = new get_tasks_query_1.GetTasksQuery();
-            const tasks = await this.queryBus.execute(query);
-            console.log(tasks);
-            return tasks;
+        return this.queryBus.execute(new get_tasks_query_1.GetTasksQuery());
+    }
+    async getTaskById(taskId) {
+        const task = await this.taskService.findTaskById(taskId);
+        if (!task) {
+            throw new common_1.NotFoundException(`Task with id ${taskId} not found`);
         }
-        catch (error) {
-            console.log(error);
-            throw error;
-        }
+        return task;
     }
     async createTask(CreateTaskDto) {
         const command = new create_task_command_1.CreateTaskCommand(CreateTaskDto);
@@ -48,6 +48,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TaskController.prototype, "getTasks", null);
 __decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], TaskController.prototype, "getTaskById", null);
+__decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -57,6 +64,7 @@ __decorate([
 exports.TaskController = TaskController = __decorate([
     (0, common_1.Controller)('task'),
     __metadata("design:paramtypes", [cqrs_1.CommandBus,
-        cqrs_1.QueryBus])
+        cqrs_1.QueryBus,
+        task_service_1.TaskService])
 ], TaskController);
 //# sourceMappingURL=task.controller.js.map

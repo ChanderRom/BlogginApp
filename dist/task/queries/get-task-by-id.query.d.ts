@@ -1,2 +1,3 @@
-export declare class GetTaskByIdQuery {
+import { IQuery } from "@nestjs/cqrs";
+export declare class GetTaskByIdQuery implements IQuery {
 }
