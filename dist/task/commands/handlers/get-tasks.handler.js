@@ -8,22 +8,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteTaskHandler = void 0;
+exports.GetTasksHandler = void 0;
 const cqrs_1 = require("@nestjs/cqrs");
-const delete_task_command_1 = require("../delete-task.command");
-const task_service_1 = require("../../task.service");
-let DeleteTaskHandler = class DeleteTaskHandler {
-    constructor(taskService) {
-        this.taskService = taskService;
+const get_tasks_command_1 = require("../get-tasks.command");
+const common_1 = require("@nestjs/common");
+const typeorm_1 = require("typeorm");
+let GetTasksHandler = class GetTasksHandler {
+    constructor(taskRepository) {
+        this.taskRepository = taskRepository;
     }
-    async execute(command) {
-        return;
+    async execute() {
+        return await this.taskRepository.find();
     }
 };
-exports.DeleteTaskHandler = DeleteTaskHandler;
-exports.DeleteTaskHandler = DeleteTaskHandler = __decorate([
-    (0, cqrs_1.CommandHandler)(delete_task_command_1.DeleteTaskCommand),
-    __metadata("design:paramtypes", [task_service_1.TaskService])
-], DeleteTaskHandler);
-//# sourceMappingURL=delete-task.handler.js.map
+exports.GetTasksHandler = GetTasksHandler;
+exports.GetTasksHandler = GetTasksHandler = __decorate([
+    (0, cqrs_1.CommandHandler)(get_tasks_command_1.GetTasksCommand),
+    __param(0, (0, common_1.Inject)('TASK_REPOSITORY')),
+    __metadata("design:paramtypes", [typeorm_1.Repository])
+], GetTasksHandler);
+//# sourceMappingURL=get-tasks.handler.js.map

@@ -31,7 +31,7 @@ exports.TaskModule = TaskModule = __decorate([
             update_task_handler_copy_1.UpdateTaskHandler,
             task_service_1.TaskService,
             get_tasks_handler_1.GetTasksHandler,
-            get_task_by_id_handler_1.GetTasksByIdHandler,
+            get_task_by_id_handler_1.GetTaskByIdHandler,
             delete_task_handler_1.DeleteTaskHandler,
             create_task_handler_1.CreateTaskHandler,
             ...task_providers_1.taskProviders,

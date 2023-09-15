@@ -8,23 +8,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateTaskHandler = void 0;
 const cqrs_1 = require("@nestjs/cqrs");
 const create_task_command_1 = require("../create-task.command");
-const task_service_1 = require("../../task.service");
+const common_1 = require("@nestjs/common");
+const typeorm_1 = require("typeorm");
 let CreateTaskHandler = class CreateTaskHandler {
-    constructor(taskService) {
-        this.taskService = taskService;
+    constructor(taskRepository) {
+        this.taskRepository = taskRepository;
     }
     async execute(command) {
         const { createTaskDto } = command;
-        return this.taskService.createTask(createTaskDto);
+        const task = this.taskRepository.create(createTaskDto);
+        await this.taskRepository.save(task);
+        return task;
     }
 };
 exports.CreateTaskHandler = CreateTaskHandler;
 exports.CreateTaskHandler = CreateTaskHandler = __decorate([
     (0, cqrs_1.CommandHandler)(create_task_command_1.CreateTaskCommand),
-    __metadata("design:paramtypes", [task_service_1.TaskService])
+    __param(0, (0, common_1.Inject)('TASK_REPOSITORY')),
+    __metadata("design:paramtypes", [typeorm_1.Repository])
 ], CreateTaskHandler);
 //# sourceMappingURL=create-task.handler.js.map

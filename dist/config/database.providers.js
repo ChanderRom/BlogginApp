@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.databaseProviders = void 0;
+const task_entity_1 = require("../task/entity/task.entity");
 const typeorm_1 = require("typeorm");
 exports.databaseProviders = [
     {
@@ -13,7 +14,7 @@ exports.databaseProviders = [
                 username: 'postgres',
                 password: 'password',
                 database: 'taskdb',
-                entities: [__dirname + '/../**/entity/*.entity.ts'],
+                entities: [task_entity_1.Task],
                 synchronize: true,
             });
             return dataSource.initialize();

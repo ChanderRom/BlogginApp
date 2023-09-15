@@ -18,8 +18,7 @@ let UpdateTaskHandler = class UpdateTaskHandler {
         this.taskService = taskService;
     }
     async execute(command) {
-        const { updateTaskDto } = command;
-        return this.taskService.updateTask(updateTaskDto);
+        return;
     }
 };
 exports.UpdateTaskHandler = UpdateTaskHandler;

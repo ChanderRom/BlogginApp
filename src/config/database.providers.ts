@@ -1,3 +1,4 @@
+import { Task } from "src/task/entity/task.entity"
 import { DataSource } from "typeorm"
 
 export const databaseProviders = [
@@ -11,7 +12,7 @@ export const databaseProviders = [
                 username: 'postgres',
                 password: 'password',
                 database: 'taskdb',
-                entities: [__dirname + '/../**/entity/*.entity.ts'],
+                entities: [Task],
                 synchronize: true,
             })
 

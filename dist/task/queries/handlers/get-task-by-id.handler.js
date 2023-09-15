@@ -9,21 +9,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GetTasksByIdHandler = void 0;
+exports.GetTaskByIdHandler = void 0;
 const cqrs_1 = require("@nestjs/cqrs");
 const get_tasks_query_1 = require("../get-tasks.query");
 const task_service_1 = require("../../task.service");
-let GetTasksByIdHandler = class GetTasksByIdHandler {
+let GetTaskByIdHandler = class GetTaskByIdHandler {
     constructor(taskService) {
         this.taskService = taskService;
     }
     async execute(query) {
-        return this.taskService.getTaskById();
+        return;
     }
 };
-exports.GetTasksByIdHandler = GetTasksByIdHandler;
-exports.GetTasksByIdHandler = GetTasksByIdHandler = __decorate([
+exports.GetTaskByIdHandler = GetTaskByIdHandler;
+exports.GetTaskByIdHandler = GetTaskByIdHandler = __decorate([
     (0, cqrs_1.QueryHandler)(get_tasks_query_1.GetTasksQuery),
     __metadata("design:paramtypes", [task_service_1.TaskService])
-], GetTasksByIdHandler);
+], GetTaskByIdHandler);
 //# sourceMappingURL=get-task-by-id.handler.js.map

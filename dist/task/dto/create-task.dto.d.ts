@@ -1,4 +1,4 @@
 export declare class CreateTaskDto {
-    readonly title: string;
-    readonly description: string;
+    title: string;
+    description: string;
 }

@@ -1,6 +1,6 @@
 export declare class Task {
-    id: number;
+    id?: string;
     title: string;
     description: string;
-    completed: boolean;
+    completed?: boolean;
 }
