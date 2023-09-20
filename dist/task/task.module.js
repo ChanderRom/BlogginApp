@@ -13,6 +13,7 @@ const task_controller_1 = require("./task.controller");
 const database_module_1 = require("../config/database.module");
 const task_providers_1 = require("./task.providers");
 const handlers_1 = require("./queries/handlers");
+const handlers_2 = require("./command/handlers");
 let TaskModule = class TaskModule {
 };
 exports.TaskModule = TaskModule;
@@ -23,6 +24,7 @@ exports.TaskModule = TaskModule = __decorate([
             database_module_1.DatabaseModule,
         ],
         providers: [
+            ...handlers_2.CommandHandlers,
             ...handlers_1.QueryHandlers,
             ...task_providers_1.taskProviders,
         ],

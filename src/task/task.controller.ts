@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs'; 
 
-import { CreateTaskCommand } from './command/impl/create-task.command';
-import { GetTaskQuery } from './queries/impl/get-task.query';
-import { GetTasksQuery } from './queries/impl';
+import { CreateTaskCommand, UpdateTaskCommand } from './command/impl';
+import { GetTasksQuery, GetTaskQuery } from './queries/impl';
+import { CreateTaskDto } from './dto/create-task.dto';
+import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Controller('task')
 export class TaskController {
@@ -23,7 +24,14 @@ export class TaskController {
     } 
 
     @Post()
-    async create(@Body() title: string, @Body() description: string): Promise<Task> {
-        return this.commandBus.execute(new CreateTaskCommand(title, description))
+    async create(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
+        const { title, description, completed } = createTaskDto
+        return this.commandBus.execute(new CreateTaskCommand(title, description, completed))
+    }
+    
+    @Patch(':id')
+    async update(@Body() updateTaskDto: UpdateTaskDto, @Param('id') id: string): Promise<Task> {
+        const { title, description, completed } = updateTaskDto
+        return this.commandBus.execute(new UpdateTaskCommand(id, title, description, completed))
     }
 }

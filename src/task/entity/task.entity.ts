@@ -3,7 +3,7 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 @Entity('tasks')
 export class Task {
   @PrimaryGeneratedColumn()
-  id?: string;
+  id: string;
 
   @Column()
   title: string;
@@ -12,5 +12,5 @@ export class Task {
   description: string;
 
   @Column({ default: false })
-  completed?: boolean;
+  completed: boolean;
 }

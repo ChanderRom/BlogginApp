@@ -7,6 +7,7 @@ import { TaskController } from './task.controller';
 import { DatabaseModule } from 'src/config/database.module';
 import { taskProviders } from './task.providers';
 import { QueryHandlers } from './queries/handlers';
+import { CommandHandlers } from './command/handlers';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { QueryHandlers } from './queries/handlers';
     DatabaseModule,
   ],
   providers: [
+    ...CommandHandlers,
     ...QueryHandlers,
     ...taskProviders,
   ],

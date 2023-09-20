@@ -15,18 +15,28 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskController = void 0;
 const common_1 = require("@nestjs/common");
 const cqrs_1 = require("@nestjs/cqrs");
-const get_task_query_1 = require("./queries/impl/get-task.query");
-const impl_1 = require("./queries/impl");
+const impl_1 = require("./command/impl");
+const impl_2 = require("./queries/impl");
+const create_task_dto_1 = require("./dto/create-task.dto");
+const update_task_dto_1 = require("./dto/update-task.dto");
 let TaskController = class TaskController {
     constructor(commandBus, queryBus) {
         this.commandBus = commandBus;
         this.queryBus = queryBus;
     }
     async findAll() {
-        return this.queryBus.execute(new impl_1.GetTasksQuery());
+        return this.queryBus.execute(new impl_2.GetTasksQuery());
     }
     async findOne(id) {
-        return this.queryBus.execute(new get_task_query_1.GetTaskQuery(id));
+        return this.queryBus.execute(new impl_2.GetTaskQuery(id));
+    }
+    async create(createTaskDto) {
+        const { title, description, completed } = createTaskDto;
+        return this.commandBus.execute(new impl_1.CreateTaskCommand(title, description, completed));
+    }
+    async update(updateTaskDto, id) {
+        const { title, description, completed } = updateTaskDto;
+        return this.commandBus.execute(new impl_1.UpdateTaskCommand(id, title, description, completed));
     }
 };
 exports.TaskController = TaskController;
@@ -43,6 +53,21 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], TaskController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_task_dto_1.CreateTaskDto]),
+    __metadata("design:returntype", Promise)
+], TaskController.prototype, "create", null);
+__decorate([
+    (0, common_1.Patch)(':id'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [update_task_dto_1.UpdateTaskDto, String]),
+    __metadata("design:returntype", Promise)
+], TaskController.prototype, "update", null);
 exports.TaskController = TaskController = __decorate([
     (0, common_1.Controller)('task'),
     __metadata("design:paramtypes", [cqrs_1.CommandBus,
