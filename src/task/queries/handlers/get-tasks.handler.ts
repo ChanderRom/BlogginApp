@@ -1,8 +1,8 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-
-import { GetTasksQuery } from '../impl/get-tasks.query';
 import { Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
+
+import { GetTasksQuery } from '../impl/get-tasks.query';
 
 
 @QueryHandler(GetTasksQuery)
