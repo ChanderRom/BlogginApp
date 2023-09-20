@@ -1,17 +1,19 @@
-import { QueryHandler, IQueryHandler } from '@nestjs/cqrs';
-import { GetTasksQuery } from '../get-tasks.query';
-import { TaskService } from '../../task.service';
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+
+import { GetTaskQuery } from '../impl/get-task.query';
 import { Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 
-@QueryHandler(GetTasksQuery)
-export class GetTaskByIdHandler implements IQueryHandler<GetTasksQuery> {
-  constructor(
-    @Inject('TASK_REPOSITORY')
-    private readonly taskRepository: Repository<Task>,
-) {}
 
-  async execute(query: GetTasksQuery) {
-    return
-  }
+@QueryHandler(GetTaskQuery)
+export class GetTaskByIdHandler implements IQueryHandler<GetTaskQuery> {
+    constructor(
+        @Inject('TASK_REPOSITORY')
+        private readonly taskRepository: Repository<Task>
+    ) {}
+
+    async execute(query: GetTaskQuery) {
+        const { id } = query
+        return this.taskRepository.findOneBy({id})
+    }
 }

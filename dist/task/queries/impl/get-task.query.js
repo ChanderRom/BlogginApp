@@ -7,4 +7,4 @@ class GetTaskQuery {
     }
 }
 exports.GetTaskQuery = GetTaskQuery;
-//# sourceMappingURL=get-tasks.query.js.map
+//# sourceMappingURL=get-task.query.js.map

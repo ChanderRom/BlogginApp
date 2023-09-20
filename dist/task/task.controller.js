@@ -15,29 +15,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskController = void 0;
 const common_1 = require("@nestjs/common");
 const cqrs_1 = require("@nestjs/cqrs");
-const create_task_dto_1 = require("./dto/create-task.dto");
-const create_task_command_1 = require("./commands/create-task.command");
-const get_tasks_query_1 = require("./queries/get-tasks.query");
-const task_service_1 = require("./task.service");
+const get_task_query_1 = require("./queries/impl/get-task.query");
+const impl_1 = require("./queries/impl");
 let TaskController = class TaskController {
-    constructor(commandBus, queryBus, taskService) {
+    constructor(commandBus, queryBus) {
         this.commandBus = commandBus;
         this.queryBus = queryBus;
-        this.taskService = taskService;
     }
-    async getTasks() {
-        return this.queryBus.execute(new get_tasks_query_1.GetTasksQuery());
+    async findAll() {
+        return this.queryBus.execute(new impl_1.GetTasksQuery());
     }
-    async getTaskById(taskId) {
-        const task = await this.taskService.findTaskById(taskId);
-        if (!task) {
-            throw new common_1.NotFoundException(`Task with id ${taskId} not found`);
-        }
-        return task;
-    }
-    async createTask(CreateTaskDto) {
-        const command = new create_task_command_1.CreateTaskCommand(CreateTaskDto);
-        return this.commandBus.execute(command);
+    async findOne(id) {
+        return this.queryBus.execute(new get_task_query_1.GetTaskQuery(id));
     }
 };
 exports.TaskController = TaskController;
@@ -46,25 +35,17 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], TaskController.prototype, "getTasks", null);
+], TaskController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], TaskController.prototype, "getTaskById", null);
-__decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_task_dto_1.CreateTaskDto]),
-    __metadata("design:returntype", Promise)
-], TaskController.prototype, "createTask", null);
+], TaskController.prototype, "findOne", null);
 exports.TaskController = TaskController = __decorate([
     (0, common_1.Controller)('task'),
     __metadata("design:paramtypes", [cqrs_1.CommandBus,
-        cqrs_1.QueryBus,
-        task_service_1.TaskService])
+        cqrs_1.QueryBus])
 ], TaskController);
 //# sourceMappingURL=task.controller.js.map

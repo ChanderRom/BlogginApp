@@ -14,15 +14,15 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetTasksHandler = void 0;
 const cqrs_1 = require("@nestjs/cqrs");
+const get_tasks_query_1 = require("../impl/get-tasks.query");
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
-const get_tasks_query_1 = require("../get-tasks.query");
 let GetTasksHandler = class GetTasksHandler {
     constructor(taskRepository) {
         this.taskRepository = taskRepository;
     }
     async execute() {
-        return await this.taskRepository.find();
+        return this.taskRepository.find({});
     }
 };
 exports.GetTasksHandler = GetTasksHandler;

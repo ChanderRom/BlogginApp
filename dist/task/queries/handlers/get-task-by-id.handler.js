@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.GetTaskByIdHandler = void 0;
 const cqrs_1 = require("@nestjs/cqrs");
-const get_tasks_query_1 = require("../get-tasks.query");
+const get_task_query_1 = require("../impl/get-task.query");
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 let GetTaskByIdHandler = class GetTaskByIdHandler {
@@ -22,12 +22,13 @@ let GetTaskByIdHandler = class GetTaskByIdHandler {
         this.taskRepository = taskRepository;
     }
     async execute(query) {
-        return;
+        const { id } = query;
+        return this.taskRepository.findOneBy({ id });
     }
 };
 exports.GetTaskByIdHandler = GetTaskByIdHandler;
 exports.GetTaskByIdHandler = GetTaskByIdHandler = __decorate([
-    (0, cqrs_1.QueryHandler)(get_tasks_query_1.GetTasksQuery),
+    (0, cqrs_1.QueryHandler)(get_task_query_1.GetTaskQuery),
     __param(0, (0, common_1.Inject)('TASK_REPOSITORY')),
     __metadata("design:paramtypes", [typeorm_1.Repository])
 ], GetTaskByIdHandler);
