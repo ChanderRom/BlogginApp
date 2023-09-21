@@ -1,10 +1,17 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { TaskModule } from './task/task.module';
 import { AppService } from './app.service';
-import { PostsModule } from './posts/posts.module';
+import { AppController } from './app.controller';
+import { databaseProviders } from './config/database.providers';
+import { DatabaseModule } from './config/database.module';
 
 @Module({
-  imports: [PostsModule],
+  imports: [
+    DatabaseModule,
+    TaskModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
