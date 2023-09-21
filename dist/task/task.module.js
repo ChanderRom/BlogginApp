@@ -9,8 +9,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskModule = void 0;
 const common_1 = require("@nestjs/common");
 const cqrs_1 = require("@nestjs/cqrs");
-const task_controller_1 = require("./task.controller");
 const database_module_1 = require("../config/database.module");
+const task_controller_1 = require("./task.controller");
 const task_providers_1 = require("./task.providers");
 const handlers_1 = require("./queries/handlers");
 const handlers_2 = require("./command/handlers");
@@ -26,7 +26,7 @@ exports.TaskModule = TaskModule = __decorate([
         providers: [
             ...handlers_2.CommandHandlers,
             ...handlers_1.QueryHandlers,
-            ...task_providers_1.taskProviders,
+            ...task_providers_1.TaskProviders,
         ],
         controllers: [task_controller_1.TaskController]
     })

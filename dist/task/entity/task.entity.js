@@ -11,11 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Task = void 0;
 const typeorm_1 = require("typeorm");
+const uuid_1 = require("uuid");
 let Task = class Task {
+    generateId() {
+        if (!this.id) {
+            this.id = (0, uuid_1.v4)();
+        }
+    }
 };
 exports.Task = Task;
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     __metadata("design:type", String)
 ], Task.prototype, "id", void 0);
 __decorate([
@@ -30,6 +36,12 @@ __decorate([
     (0, typeorm_1.Column)({ default: false }),
     __metadata("design:type", Boolean)
 ], Task.prototype, "completed", void 0);
+__decorate([
+    (0, typeorm_1.BeforeInsert)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], Task.prototype, "generateId", null);
 exports.Task = Task = __decorate([
     (0, typeorm_1.Entity)('tasks')
 ], Task);

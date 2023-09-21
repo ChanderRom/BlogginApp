@@ -1,7 +1,6 @@
 import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
-import { Inject } from "@nestjs/common";
+import { HttpException, HttpStatus, Inject } from "@nestjs/common";
 import { Repository } from "typeorm";
-
 import { UpdateTaskCommand } from "../impl";
 
 
@@ -12,13 +11,12 @@ export class UpdateTaskHandler implements ICommandHandler<UpdateTaskCommand> {
         private readonly taskRepository: Repository<Task>
     ) {}
     
-    async execute(command: UpdateTaskCommand): Promise<Task> {
+    async execute(command: UpdateTaskCommand) {
         const { id, title, description, completed } = command
-        console.log({id})
         const task = await this.taskRepository.findOneBy({id})
 
         if(!task) {
-            throw new Error(`Tha task with id ${id} doesn't exist.`)
+            throw new HttpException(`Tha task with id ${id} doesn't exsit`, HttpStatus.NOT_FOUND)
         }
 
         const updatedTask = await this.taskRepository.save({
@@ -27,6 +25,7 @@ export class UpdateTaskHandler implements ICommandHandler<UpdateTaskCommand> {
             description,
             completed,
         })
+        console.log(`Task with id ${id} updated successfully`)
 
         return updatedTask
     }

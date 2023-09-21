@@ -23,14 +23,14 @@ let UpdateTaskHandler = class UpdateTaskHandler {
     }
     async execute(command) {
         const { id, title, description, completed } = command;
-        console.log({ id });
         const task = await this.taskRepository.findOneBy({ id });
         if (!task) {
-            throw new Error(`Tha task with id ${id} doesn't exist.`);
+            throw new common_1.HttpException(`Tha task with id ${id} doesn't exsit`, common_1.HttpStatus.NOT_FOUND);
         }
         const updatedTask = await this.taskRepository.save(Object.assign(Object.assign({}, task), { title,
             description,
             completed }));
+        console.log(`Task with id ${id} updated successfully`);
         return updatedTask;
     }
 };

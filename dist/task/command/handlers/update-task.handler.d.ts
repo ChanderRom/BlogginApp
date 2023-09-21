@@ -4,5 +4,10 @@ import { UpdateTaskCommand } from "../impl";
 export declare class UpdateTaskHandler implements ICommandHandler<UpdateTaskCommand> {
     private readonly taskRepository;
     constructor(taskRepository: Repository<Task>);
-    execute(command: UpdateTaskCommand): Promise<Task>;
+    execute(command: UpdateTaskCommand): Promise<{
+        title: string;
+        description: string;
+        completed: boolean;
+        id: string;
+    } & Task>;
 }

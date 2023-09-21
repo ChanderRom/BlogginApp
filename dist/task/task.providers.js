@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.taskProviders = void 0;
+exports.TaskProviders = void 0;
 const task_entity_1 = require("./entity/task.entity");
-exports.taskProviders = [
+exports.TaskProviders = [
     {
         provide: 'TASK_REPOSITORY',
         useFactory: (dataSource) => dataSource.getRepository(task_entity_1.Task),

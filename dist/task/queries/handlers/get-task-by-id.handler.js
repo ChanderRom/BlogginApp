@@ -23,7 +23,11 @@ let GetTaskByIdHandler = class GetTaskByIdHandler {
     }
     async execute(query) {
         const { id } = query;
-        return this.taskRepository.findOneBy({ id });
+        const task = await this.taskRepository.findOneBy({ id });
+        if (!task) {
+            throw new common_1.HttpException(`Tha task with id ${id} doesn't exsit`, common_1.HttpStatus.NOT_FOUND);
+        }
+        return task;
     }
 };
 exports.GetTaskByIdHandler = GetTaskByIdHandler;

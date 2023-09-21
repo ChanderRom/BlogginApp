@@ -1,10 +1,9 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs'; 
 
-import { CreateTaskCommand, UpdateTaskCommand } from './command/impl';
+import { CreateTaskCommand, DeleteTaskCommand, UpdateTaskCommand } from './command/impl';
 import { GetTasksQuery, GetTaskQuery } from './queries/impl';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
+import { CreateTaskDto, UpdateTaskDto } from './dto';
 
 @Controller('task')
 export class TaskController {
@@ -33,5 +32,10 @@ export class TaskController {
     async update(@Body() updateTaskDto: UpdateTaskDto, @Param('id') id: string): Promise<Task> {
         const { title, description, completed } = updateTaskDto
         return this.commandBus.execute(new UpdateTaskCommand(id, title, description, completed))
+    }
+
+    @Delete(':id')
+    async delete(@Param('id') id: string) {
+        return this.commandBus.execute(new DeleteTaskCommand(id))
     }
 }

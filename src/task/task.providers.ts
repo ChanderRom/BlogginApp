@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { Task } from './entity/task.entity';
 
-export const taskProviders = [
+export const TaskProviders = [
   {
     provide: 'TASK_REPOSITORY',
     useFactory: (dataSource: DataSource) => dataSource.getRepository(Task),

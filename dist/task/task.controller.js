@@ -17,8 +17,7 @@ const common_1 = require("@nestjs/common");
 const cqrs_1 = require("@nestjs/cqrs");
 const impl_1 = require("./command/impl");
 const impl_2 = require("./queries/impl");
-const create_task_dto_1 = require("./dto/create-task.dto");
-const update_task_dto_1 = require("./dto/update-task.dto");
+const dto_1 = require("./dto");
 let TaskController = class TaskController {
     constructor(commandBus, queryBus) {
         this.commandBus = commandBus;
@@ -37,6 +36,9 @@ let TaskController = class TaskController {
     async update(updateTaskDto, id) {
         const { title, description, completed } = updateTaskDto;
         return this.commandBus.execute(new impl_1.UpdateTaskCommand(id, title, description, completed));
+    }
+    async delete(id) {
+        return this.commandBus.execute(new impl_1.DeleteTaskCommand(id));
     }
 };
 exports.TaskController = TaskController;
@@ -57,7 +59,7 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_task_dto_1.CreateTaskDto]),
+    __metadata("design:paramtypes", [dto_1.CreateTaskDto]),
     __metadata("design:returntype", Promise)
 ], TaskController.prototype, "create", null);
 __decorate([
@@ -65,9 +67,16 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [update_task_dto_1.UpdateTaskDto, String]),
+    __metadata("design:paramtypes", [dto_1.UpdateTaskDto, String]),
     __metadata("design:returntype", Promise)
 ], TaskController.prototype, "update", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], TaskController.prototype, "delete", null);
 exports.TaskController = TaskController = __decorate([
     (0, common_1.Controller)('task'),
     __metadata("design:paramtypes", [cqrs_1.CommandBus,

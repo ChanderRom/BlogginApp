@@ -13,7 +13,6 @@ export class CreateTaskHandler implements ICommandHandler<CreateTaskCommand> {
     ) {}
     
     async execute(command: CreateTaskCommand): Promise<Task> {
-        console.log({command})
         return this.taskRepository.save({...command})
     }
 }

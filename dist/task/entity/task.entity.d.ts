@@ -3,4 +3,5 @@ export declare class Task {
     title: string;
     description: string;
     completed: boolean;
+    generateId(): void;
 }
